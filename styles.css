@@ -25,3 +25,7 @@ td {
 .bg-light {
   background-color: #f7f7f7!important;
 }
+
+p {
+  font-size: .9rem;
+}
