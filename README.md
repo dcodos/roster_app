@@ -2,7 +2,7 @@
 
 ## Technologies used
 * **Bootstrap**: Bootstrap is used to create a clean look and feel for the site, while also helping to properly lay out elements.
-* **jQuery**: jQuery is used to make it easier to manipulate the DOM and interacct with the roster
+* **jQuery**: jQuery is used to make it easier to manipulate the DOM and interact with the roster
 * **Bootstrap-select**: This is a jQuery plugin that allows for more versatile dropdown menus. This is used for the filters which allow multiple items to be selected.
 * **HTML5 Web Storage**: This allows notes to be stored locally within the user's browser. All notes are stored in the `localStorage` object, so they do not expire when you close your browser. Only clearing browser data or manually deleting the note will remove it.
 
