@@ -1,6 +1,9 @@
+// Global rrays to store position and bats/throws filters
 posArr = [];
 throwsArr = [];
 batsArr = [];
+
+// When page first loads, activate select pickers and load data.
 $(document).ready(function() {
   $('.selectpicker').selectpicker();
   $.getJSON("https://raw.githubusercontent.com/kruser/interview-developer/master/javascript/roster.json", function(dataRes) {
@@ -10,25 +13,32 @@ $(document).ready(function() {
   });
 });
 
-
+// Function to load data into table on page
 function loadData(dataToLoad) {
+  // Clear out the current table body
   var body = $("#roster_body");
   body.empty();
+
+  // Loop through each row and format/insert them properly in a new table row
   $.each(dataToLoad, function(index, value) {
     body.append("<tr>");
     body.append("<td class=\"notes-click\" data-id=\"" + value.player_id_mlbam + "\">" + value.firstname + " " + value.lastname + "</td>");
     body.append("<td><img width=\"50\" src=\"http://gdx.mlb.com/images/gameday/mugshots/mlb/" + value.player_id_mlbam + ".jpg\"></td>");
     body.append("<td>" + value.dob_dte + "</td>");
     body.append("<td>" + Math.floor(value.height / 12) + "'" + value.height % 12 + "\"" + "</td>");
-    body.append("<td>" + value.weight + "</td>");
-    body.append("<td>" + value.birth_place + "</td>");
+    body.append("<td>" + value.weight + "&nbsp;&nbsp;</td>");
+    body.append("<td class=\"birth-place\">" + value.birth_place + "</td>");
+
+    // If no school is listed, show N/A instead of undefined
     var school = "N/A";
     if (typeof value.school != 'undefined') {
       school = value.school;
     }
     body.append("<td>" + school + "</td>");
-    body.append("<td>" + value.bats + "/" + value.throws + "</td>");
-    body.append("<td>" + value.position + "</td>");
+    body.append("<td>" + value.bats + "/" + value.throws + "&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+    body.append("<td>" + value.position + "&nbsp;&nbsp;&nbsp;</td>");
+
+    // If no debut date is listed, show N/A instead of undefined
     var debut = "N/A";
     if (typeof value.mlb_debut != 'undefined') {
       debut = value.mlb_debut;
@@ -38,26 +48,38 @@ function loadData(dataToLoad) {
   });
 }
 
+// Listener for player names. When clicked this launches the notes modal
 $(document.body).on('click', '.notes-click', function() {
+  // Get the name and ID of the selected player, and retrieve previous note
   var name = $(this).html();
   var playerId = $(this).data("id");
   var prevNote = localStorage.getItem(playerId);
+
+  // If there is a previous note, fill the textarea with it
   if (prevNote != null) {
     $("#noteArea").val(prevNote);
   }
+
+  // Update the modal header and ID data, then show the modal
   $("#modalPlayerName").html(name);
   $("#modalPlayerName").data("id", playerId);
   $('#notesModal').modal('show');
 });
 
+// Listener for save button on notes modal
 $("#saveNote").click(function() {
+  // Get the player ID and note text
   var playerId = $("#modalPlayerName").data("id");
   var note = $("#noteArea").val();
+
+  // If the note is empty, delete it from local storage, otherwise add it
   if (note.length < 1) {
     localStorage.removeItem(playerId);
   } else {
     localStorage.setItem(playerId, note);
   }
+
+  // Hide the modal once complete
   $('#notesModal').modal('hide');
 });
 
@@ -71,11 +93,23 @@ $('#notesModal').on('hidden.bs.modal', function (e) {
   $("#noteArea").val("");
 })
 
+init = false;
 $(".clickable").click(function() {
+    if (init) {
+      oldHTML = sortedElem.html();
+      sortedElem.html(oldHTML.split(" <")[0]);
+    }
+    sortedElem = $(this)
     var field = $(this).data("field");
     var dir = $(this).data("dir");
+    if (dir == -1) {
+      sortedElem.append(" <i class=\"fas fa-sort-down\">");
+    } else {
+      sortedElem.append(" <i class=\"fas fa-sort-up\">");
+    }
     sortData(field, dir);
     $(this).data("dir", dir * -1);
+    init = true;
 });
 
 $('#position-select').on('change', function(){

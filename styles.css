@@ -1,23 +1,23 @@
 .container {
-  margin-top: 75px;
+  margin-top: 75px !important;
 }
 
 .clickable, .notes-click {
   cursor: pointer;
 }
 
-.filter-option-inner {
-  color: white;
+.notes-click:hover, .clickable:hover {
+  text-decoration: underline;
 }
 
 #filter-box {
   margin-bottom: 20px;
 }
 
-button {
-  color: white !important;
+td {
+  font-size: .9rem;
 }
 
-.filter-con {
-  margin-right: 20px;
+.dropdown-toggle {
+  color: white !important;
 }
