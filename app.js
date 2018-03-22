@@ -65,7 +65,7 @@ $(document.body).on('click', '.notes-click', function() {
   }
 
   // Update the modal header and ID data, then show the modal
-  $("#modalPlayerName").html(name);
+  $("#modalPlayerName").html(name.split(" <")[0]);
   $("#modalPlayerName").data("id", playerId);
   $('#notesModal').modal('show');
 });

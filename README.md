@@ -4,6 +4,7 @@
 * **Bootstrap**: Bootstrap is used to create a clean look and feel for the site, while also helping to properly lay out elements.
 * **jQuery**: jQuery is used to make it easier to manipulate the DOM and interacct with the roster
 * **Bootstrap-select**: This is a jQuery plugin that allows for more versatile dropdown menus. This is used for the filters which allow multiple items to be selected.
+* **HTML5 Web Storage**: This allows notes to be stored locally within the user's browser. All notes are stored in the `localStorage` object, so they do not expire when you close your browser. Only clearing browser data or manually deleting the note will remove it.
 
 ## Running the app
 The application is a standalone website that does not require any server. Simply download the files contained in the repo and open `index.html` in a web browser. **Make sure that if the repo is downloaded as a `.zip` folder, you unzip before opening the app.**
