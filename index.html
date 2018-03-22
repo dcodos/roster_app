@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Interactive MLB Roster">
   <meta name="author" content="Dan Codos">
-  <!-- <link rel="icon" href="../../../../favicon.ico"> -->
+  <link rel="icon" href="http://ui.bamstatic.com/baseball/images/team-logos/current/favicon/chc.ico">
 
   <title>Interactive Roster</title>
 
@@ -18,52 +18,61 @@
 
 <body>
 
+  <!-- Start simple navbar since this is only one page -->
   <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
     <a class="navbar-brand" href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Chicago_Cubs_logo.svg/2000px-Chicago_Cubs_logo.svg.png" width="45" height="45" alt="">
       Interactive Roster
     </a>
-
   </nav>
 
+  <!-- Start main container -->
   <main role="main" class="container">
     <h2>Interactive Roster With Player Notes</h2>
+
+    <!-- Row with filters and instructions -->
     <div class="row">
-    <div class="col-6">
-      <p style="margin-bottom:.3rem;"></p>
-      <select class="selectpicker" id="position-select" data-style="btn-primary" multiple title="Position" data-width="125px">
-        <option data-pos="IF">Infielders</option>
-        <option data-pos="OF">Outfielders</option>
-        <option data-pos="P">Pitchers</option>
-        <option data-pos="S">Starters</option>
-        <option data-pos="R">Relievers</option>
-        <option data-pos="C">C</option>
-        <option data-pos="1B">1B</option>
-        <option data-pos="2B">2B</option>
-        <option data-pos="3B">3B</option>
-        <option data-pos="SS">SS</option>
-        <option data-pos="LF">LF</option>
-        <option data-pos="CF">CF</option>
-        <option data-pos="LHS">LHS</option>
-        <option data-pos="RHS">RHS</option>
-        <option data-pos="LHR">LHR</option>
-        <option data-pos="RHR">RHR</option>
-      </select>
-      <select class="selectpicker" id="bats-select" data-style="btn-primary" multiple title="Bats" data-width="125px">
-        <option data-bats="L" title="Bats: L">Left</option>
-        <option data-bats="R" title="Bats: R">Right</option>
-        <option data-bats="S" title="Bats: S">Switch</option>
-      </select>
-      <select class="selectpicker" id="throws-select" data-style="btn-primary" multiple title="Throws" data-width="125px">
-        <option data-throws="L" title="Throws: L">Left</option>
-        <option data-throws="R" title="Throws: R">Right</option>
-      </select>
+      <div class="col-6">
+        <p style="margin-bottom:.3rem;"></p>
+        <!-- Position filter -->
+        <select class="selectpicker" id="position-select" data-style="btn-primary" multiple title="Position" data-width="125px">
+          <option data-pos="IF">Infielders</option>
+          <option data-pos="OF">Outfielders</option>
+          <option data-pos="P">Pitchers</option>
+          <option data-pos="S">Starters</option>
+          <option data-pos="R">Relievers</option>
+          <option data-pos="C">C</option>
+          <option data-pos="1B">1B</option>
+          <option data-pos="2B">2B</option>
+          <option data-pos="3B">3B</option>
+          <option data-pos="SS">SS</option>
+          <option data-pos="LF">LF</option>
+          <option data-pos="CF">CF</option>
+          <option data-pos="LHS">LHS</option>
+          <option data-pos="RHS">RHS</option>
+          <option data-pos="LHR">LHR</option>
+          <option data-pos="RHR">RHR</option>
+        </select>
+        <!-- Bats filter -->
+        <select class="selectpicker" id="bats-select" data-style="btn-primary" multiple title="Bats" data-width="125px">
+          <option data-bats="L" title="Bats: L">Left</option>
+          <option data-bats="R" title="Bats: R">Right</option>
+          <option data-bats="S" title="Bats: S">Switch</option>
+        </select>
+        <!-- Throws filter -->
+        <select class="selectpicker" id="throws-select" data-style="btn-primary" multiple title="Throws" data-width="125px">
+          <option data-throws="L" title="Throws: L">Left</option>
+          <option data-throws="R" title="Throws: R">Right</option>
+        </select>
+      </div>
+      <div class="col-6" style="text-align:right;">
+        <p style="margin-bottom:.3rem;">To see and create notes, click on a player's name</p>
+        <p>Click on column headers to sort the data</p>
+      </div>
     </div>
-    <div class="col-6" style="text-align:right;">
-      <p style="margin-bottom:.3rem;">To see and create notes, click on a player's name</p>
-      <p>Click on column headers to sort the data</p>
-    </div>
-  </div>
+
+    <!-- Begin main data table -->
     <table class="table" id="roster_table">
+      <!-- Populate header with proper columns -->
       <thead>
         <tr>
           <th class="clickable" data-field="lastname" data-dir="1">Name</th>
@@ -78,12 +87,14 @@
           <th class="clickable" data-field="mlb_debut" data-dir="-1">Debut</th>
         </tr>
       </thead>
-      <tbody id="roster_body">
 
+      <!-- Empty table body that will be filled in by app.js -->
+      <tbody id="roster_body">
       </tbody>
     </table>
   </main>
 
+  <!-- Begin modal for player notes. This is not visible until user clicks on a player name -->
   <div class="modal fade" id="notesModal" tabindex="-1" role="dialog" aria-labelledby="modalPlayerName" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -108,7 +119,6 @@
   </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/js/bootstrap-select.min.js"></script>
   <script src="app.js"></script>
