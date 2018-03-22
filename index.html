@@ -26,10 +26,10 @@
   </nav>
 
   <main role="main" class="container">
-    <!-- <h1>Roster</h1> -->
-    <p><i>Click on column headers to sort</i></p>
-    <p><i>To see and create notes, click on a player's name</i></p>
-    <div id="filter-box">
+    <h2>Interactive Roster With Player Notes</h2>
+    <div class="row">
+    <div class="col-6">
+      <p style="margin-bottom:.3rem;"></p>
       <select class="selectpicker" id="position-select" data-style="btn-primary" multiple title="Position" data-width="125px">
         <option data-pos="IF">Infielders</option>
         <option data-pos="OF">Outfielders</option>
@@ -58,6 +58,11 @@
         <option data-throws="R" title="Throws: R">Right</option>
       </select>
     </div>
+    <div class="col-6" style="text-align:right;">
+      <p style="margin-bottom:.3rem;">To see and create notes, click on a player's name</p>
+      <p>Click on column headers to sort the data</p>
+    </div>
+  </div>
     <table class="table" id="roster_table">
       <thead>
         <tr>
