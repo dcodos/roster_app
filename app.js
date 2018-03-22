@@ -22,7 +22,11 @@ function loadData(dataToLoad) {
   // Loop through each row and format/insert them properly in a new table row
   $.each(dataToLoad, function(index, value) {
     body.append("<tr>");
-    body.append("<td class=\"notes-click\" data-id=\"" + value.player_id_mlbam + "\">" + value.firstname + " " + value.lastname + "</td>");
+    if (localStorage.getItem(value.player_id_mlbam)) {
+      body.append("<td class=\"notes-click\" data-id=\"" + value.player_id_mlbam + "\">" + value.firstname + " " + value.lastname + " <i data-fa-transform=\"rotate-180\" style=\"color: blue;\" class=\"far fa-sticky-note\"></i></td>");
+    } else {
+      body.append("<td class=\"notes-click\" data-id=\"" + value.player_id_mlbam + "\">" + value.firstname + " " + value.lastname + "</td>");
+    }
     body.append("<td><img width=\"50\" src=\"http://gdx.mlb.com/images/gameday/mugshots/mlb/" + value.player_id_mlbam + ".jpg\"></td>");
     body.append("<td>" + value.dob_dte + "</td>");
     body.append("<td>" + Math.floor(value.height / 12) + "'" + value.height % 12 + "\"" + "</td>");
@@ -81,6 +85,7 @@ $("#saveNote").click(function() {
 
   // Hide the modal once complete
   $('#notesModal').modal('hide');
+  loadData(filtered);
 });
 
 // Listener for the note deletion button
@@ -89,6 +94,7 @@ $("#deleteNote").click(function() {
   var playerId = $("#modalPlayerName").data("id");
   localStorage.removeItem(playerId);
   $('#notesModal').modal('hide');
+  loadData(filtered);
 });
 
 // Clears the textarea every time the modal is hidden.
