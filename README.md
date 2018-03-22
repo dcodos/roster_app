@@ -6,7 +6,7 @@
 * **Bootstrap-select**: This is a jQuery plugin that allows for more versatile dropdown menus. This is used for the filters which allow multiple items to be selected.
 
 ## Running the app
-The application is a standalone website that does not require any server. Simply download the files contained in the repo and open `index.html` in a web browser. Make sure that if the repo is downloaded as a `.zip` folder, you unzip before opening the app.
+The application is a standalone website that does not require any server. Simply download the files contained in the repo and open `index.html` in a web browser. **Make sure that if the repo is downloaded as a `.zip` folder, you unzip before opening the app.**
 
 ## Using the app
 This application allows for simple sorting, filtering, and note-taking on players.
