@@ -1,86 +1,108 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Interactive MLB Roster">
-    <meta name="author" content="Dan Codos">
-    <!-- <link rel="icon" href="../../../../favicon.ico"> -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Interactive MLB Roster">
+  <meta name="author" content="Dan Codos">
+  <!-- <link rel="icon" href="../../../../favicon.ico"> -->
 
-    <title>Interactive Roster</title>
+  <title>Interactive Roster</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/css/bootstrap-select.min.css">
-    <link href="styles.css" rel="stylesheet">
-  </head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/css/bootstrap-select.min.css">
+  <link href="styles.css" rel="stylesheet">
+</head>
 
-  <body>
+<body>
 
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Chicago_Cubs_logo.svg/2000px-Chicago_Cubs_logo.svg.png" width="45" height="45" alt=""></a>
 
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-        </ul>
+  </nav>
+
+  <main role="main" class="container">
+    <h1>Roster</h1>
+    <p><i>Click on column headers to sort</i></p>
+    <p><i>To see and create notes, click on a player's name</i></p>
+    <div id="filter-box">
+      <select class="selectpicker" id="position-select" data-style="btn-primary" multiple title="Position" data-width="125px">
+        <option data-pos="IF">Infielders</option>
+        <option data-pos="OF">Outfielders</option>
+        <option data-pos="P">Pitchers</option>
+        <option data-pos="S">Starters</option>
+        <option data-pos="R">Relievers</option>
+        <option data-pos="C">C</option>
+        <option data-pos="1B">1B</option>
+        <option data-pos="2B">2B</option>
+        <option data-pos="3B">3B</option>
+        <option data-pos="SS">SS</option>
+        <option data-pos="LF">LF</option>
+        <option data-pos="CF">CF</option>
+        <option data-pos="LHS">LHS</option>
+        <option data-pos="RHS">RHS</option>
+        <option data-pos="LHR">LHR</option>
+        <option data-pos="RHR">RHR</option>
+      </select>
+      <select class="selectpicker" id="bats-select" data-style="btn-primary" multiple title="Bats" data-width="125px">
+        <option data-bats="L" title="Bats: L">Left</option>
+        <option data-bats="R" title="Bats: R">Right</option>
+        <option data-bats="S" title="Bats: S">Switch</option>
+      </select>
+      <select class="selectpicker" id="throws-select" data-style="btn-primary" multiple title="Throws" data-width="125px">
+        <option data-throws="L" title="Throws: L">Left</option>
+        <option data-throws="R" title="Throws: R">Right</option>
+      </select>
+    </div>
+    <table class="table" id="roster_table">
+      <thead>
+        <tr>
+          <th class="clickable" data-field="lastname" data-dir="1">Name</th>
+          <th></th>
+          <th class="clickable" data-field="dob_dte" data-dir="1">DOB</th>
+          <th class="clickable" data-field="height" data-dir="-1">Ht</th>
+          <th class="clickable" data-field="weight" data-dir="-1">Wt</th>
+          <th class="clickable" data-field="birth_place" data-dir="-1">Birth Place</th>
+          <th class="clickable" data-field="school" data-dir="-1">School</th>
+          <th class="clickable" data-field="bats" data-dir="-1">B/T</th>
+          <th class="clickable" data-field="position" data-dir="-1">Pos</th>
+          <th class="clickable" data-field="mlb_debut" data-dir="-1">Debut</th>
+        </tr>
+      </thead>
+      <tbody id="roster_body">
+
+      </tbody>
+    </table>
+  </main>
+
+  <div class="modal fade" id="notesModal" tabindex="-1" role="dialog" aria-labelledby="modalPlayerName" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalPlayerName"> Modal title</h5>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="noteArea">Enter Notes:</label>
+              <textarea class="form-control" id="noteArea" rows="3"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="deleteNote">Delete Note</button>
+          <button type="button" class="btn btn-primary" id="saveNote">Save changes</button>
+        </div>
       </div>
-    </nav>
+    </div>
+  </div>
 
-    <main role="main" class="container">
-
-      <select class="selectpicker" id="position-select" data-style="btn-primary" multiple title="Position">
-  <option data-pos="IF">Infielders</option>
-  <option data-pos="OF">Outfielders</option>
-  <option data-pos="P">Pitchers</option>
-  <option data-pos="S">Starters</option>
-  <option data-pos="R">Relievers</option>
-  <option data-pos="C">C</option>
-  <option data-pos="1B">1B</option>
-  <option data-pos="2B">2B</option>
-  <option data-pos="3B">3B</option>
-  <option data-pos="SS">SS</option>
-  <option data-pos="LF">LF</option>
-  <option data-pos="CF">CF</option>
-  <option data-pos="LHS">LHS</option>
-  <option data-pos="RHS">RHS</option>
-  <option data-pos="LHR">LHR</option>
-  <option data-pos="RHR">RHR</option>
-
-</select>
-
-
-      <table class="table" id="roster_table">
-        <thead>
-          <tr>
-            <th class="clickable" data-field="lastname" data-dir="1">Name</th>
-            <th></th>
-            <th class="clickable" data-field="dob_dte" data-dir="1">DOB</th>
-            <th class="clickable" data-field="height" data-dir="-1">Ht</th>
-            <th class="clickable" data-field="weight" data-dir="-1">Wt</th>
-            <th class="clickable" data-field="birth_place" data-dir="-1">Birth Place</th>
-            <th class="clickable" data-field="school" data-dir="-1">School</th>
-            <th class="clickable" data-field="bats" data-dir="-1">B/T</th>
-            <th class="clickable" data-field="position" data-dir="-1">Pos</th>
-            <th class="clickable" data-field="mlb_debut" data-dir="-1">Debut</th>
-          </tr>
-        </thead>
-        <tbody id="roster_body">
-
-        </tbody>
-      </table>
-
-    </main>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/js/bootstrap-select.min.js"></script>
-    <script src="app.js"></script>
-  </body>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/js/bootstrap-select.min.js"></script>
+  <script src="app.js"></script>
+</body>
 </html>

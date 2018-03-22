@@ -1,7 +1,23 @@
 .container {
-  margin-top: 60px;
+  margin-top: 75px;
 }
 
-.clickable {
+.clickable, .notes-click {
   cursor: pointer;
+}
+
+.filter-option-inner {
+  color: white;
+}
+
+#filter-box {
+  margin-bottom: 20px;
+}
+
+button {
+  color: white !important;
+}
+
+.filter-con {
+  margin-right: 20px;
 }
