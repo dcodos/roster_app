@@ -19,7 +19,7 @@
 <body>
 
   <!-- Start simple navbar since this is only one page -->
-  <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+  <nav class="navbar navbar-expand-md navbar-dark bg-light fixed-top">
     <a class="navbar-brand" href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Chicago_Cubs_logo.svg/2000px-Chicago_Cubs_logo.svg.png" width="45" height="45" alt="">
       Interactive Roster
     </a>
@@ -27,8 +27,6 @@
 
   <!-- Start main container -->
   <main role="main" class="container">
-    <h2>Interactive Roster With Player Notes</h2>
-
     <!-- Row with filters and instructions -->
     <div class="row">
       <div class="col-6">
@@ -65,7 +63,7 @@
         </select>
       </div>
       <div class="col-6" style="text-align:right;">
-        <p style="margin-bottom:.3rem;">Click on a player's name to edit notes. A <i data-fa-transform="rotate-180" style="color: blue;" class="far fa-sticky-note"></i> means a note already exists.</p>
+        <p style="margin-bottom:.3rem;">Click on a player's name to edit notes. A <i data-fa-transform="rotate-180" class="far fa-sticky-note note-icon"></i> means a note already exists.</p>
         <p>Click on column headers to sort the data.</p>
       </div>
     </div>
@@ -74,7 +72,7 @@
     <table class="table" id="roster_table">
       <!-- Populate header with proper columns -->
       <thead>
-        <tr>
+        <tr class="table-header">
           <th class="clickable" data-field="lastname" data-dir="1">Name</th>
           <th></th>
           <th class="clickable" data-field="dob_dte" data-dir="-1">DOB</th>

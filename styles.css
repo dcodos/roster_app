@@ -19,13 +19,27 @@ td {
 }
 
 .dropdown-toggle {
+  background-color: #0e3386 !important;
+  border-color: #0e3386 !important;
   color: white !important;
 }
 
 .bg-light {
-  background-color: #f7f7f7!important;
+  background-color: #0e3386 !important;
 }
 
 p {
   font-size: .9rem;
+}
+
+.note-icon {
+  color: #0e3386 !important;
+}
+
+.table-header {
+  background-color: #cc3433
+}
+
+th {
+  color: white;
 }

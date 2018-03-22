@@ -23,7 +23,7 @@ function loadData(dataToLoad) {
   $.each(dataToLoad, function(index, value) {
     body.append("<tr>");
     if (localStorage.getItem(value.player_id_mlbam)) {
-      body.append("<td class=\"notes-click\" data-id=\"" + value.player_id_mlbam + "\">" + value.firstname + " " + value.lastname + " <i data-fa-transform=\"rotate-180\" style=\"color: blue;\" class=\"far fa-sticky-note\"></i></td>");
+      body.append("<td class=\"notes-click\" data-id=\"" + value.player_id_mlbam + "\">" + value.firstname + " " + value.lastname + " <i data-fa-transform=\"rotate-180\" style=\"color: blue;\" class=\"far fa-sticky-note note-icon\"></i></td>");
     } else {
       body.append("<td class=\"notes-click\" data-id=\"" + value.player_id_mlbam + "\">" + value.firstname + " " + value.lastname + "</td>");
     }
