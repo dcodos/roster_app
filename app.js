@@ -83,39 +83,59 @@ $("#saveNote").click(function() {
   $('#notesModal').modal('hide');
 });
 
+// Listener for the note deletion button
 $("#deleteNote").click(function() {
+  // Get player ID, remove from storage, then hide modal.
   var playerId = $("#modalPlayerName").data("id");
   localStorage.removeItem(playerId);
   $('#notesModal').modal('hide');
 });
 
+// Clears the textarea every time the modal is hidden.
 $('#notesModal').on('hidden.bs.modal', function (e) {
   $("#noteArea").val("");
 })
 
 init = false;
+
+// Listener for sorting clicked column headers
 $(".clickable").click(function() {
+    // Check if this is the first sort and if not, clear any sort icons from other sorted columns
     if (init) {
       oldHTML = sortedElem.html();
       sortedElem.html(oldHTML.split(" <")[0]);
     }
+
+    // Get the sorted Element and which field/direction needs to be sorted
     sortedElem = $(this)
     var field = $(this).data("field");
     var dir = $(this).data("dir");
+
+    // Add appropriate sort icon
     if (dir == -1) {
       sortedElem.append(" <i class=\"fas fa-sort-down\">");
     } else {
       sortedElem.append(" <i class=\"fas fa-sort-up\">");
     }
+
+    // Sort the data and change the direction for next sort
     sortData(field, dir);
     $(this).data("dir", dir * -1);
     init = true;
 });
 
+// Listener for position dropdown
 $('#position-select').on('change', function(){
   posArr = [];
+
+  // Get all selected options
   var selected = $(this).children('option:selected');
+
+  // Loop through each option
   $.each(selected, function(index, value) {
+
+    // Get the value of the position, then add all applicable positions to the posArr
+    // For example, OF, can take any OF position, or OH
     var val = $(value).data("pos");
     if (val == "OF") {
       posArr.push("LF");
@@ -138,32 +158,54 @@ $('#position-select').on('change', function(){
       posArr.push("RHS");
       posArr.push("LHS");
     }
+
+    // Add the original value to posArr
     posArr.push(val);
   });
+
+  // Filter the data based on all selected filters
   filterData();
 });
 
+// Listener for bats dropdown
 $('#bats-select').on('change', function(){
   batsArr = [];
+
+  // Get selected batting handedness
   var selected = $(this).children('option:selected');
+
+  // Add each one to the batsArr
   $.each(selected, function(index, value) {
     var val = $(value).data("bats");
     batsArr.push(val);
   });
+
+  // Filter the data based on all selected filters
   filterData();
 });
 
+// Listener for throws dropdown
 $('#throws-select').on('change', function(){
   throwsArr = [];
+
+  // Get selected throwing handedness
   var selected = $(this).children('option:selected');
+
+  // Add each one to throwsArr
   $.each(selected, function(index, value) {
     var val = $(value).data("throws");
     throwsArr.push(val);
   });
+
+  // Filter the data based on all selected filters
   filterData();
 });
 
+// Function to filter data
 function filterData() {
+
+  // Use grep to check if each item is in the selected position, bats, and throws
+  // If nothing is selected for a given box, it shows all
   filtered = $.grep(data, function(obj, i) {
     var posStatus = $.inArray(obj.position, posArr);
     var batsStatus = $.inArray(obj.bats, batsArr);
@@ -176,9 +218,12 @@ function filterData() {
   loadData(filtered)
 };
 
+// Function to sort the data based on a given field
 function sortByField(field, dir) {
   return function (a, b) {
     var res = 0;
+
+    // If field is undefined, show at bottom
     if (typeof a[field] == 'undefined') return 1;
     if (typeof b[field] == 'undefined') return -1;
     if (a[field] < b[field]) res = -1;
@@ -187,6 +232,7 @@ function sortByField(field, dir) {
   }
 }
 
+// Function calls the sortByField to actually sort and update the data
 function sortData(field, dir) {
   filtered.sort(sortByField(field, dir));
   loadData(filtered);
